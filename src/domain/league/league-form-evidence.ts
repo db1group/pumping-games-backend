@@ -23,6 +23,10 @@ export class LeagueFormEvidence {
     return this.description;
   }
 
+  getEvidences(): Evidence[] {
+    return this.evidences;
+  }
+
   changeName(name: string) {
     this.name = new EvidenceName(name);
   }
