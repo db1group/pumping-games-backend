@@ -5,6 +5,7 @@ export class Id {
 
   constructor(id?: string) {
     if (id && !this.validateUUID(id)) {
+      console.log('Id', id);
       throw new Error('Invalid UUID');
     }
     this.value = id || randomUUID();

@@ -9,6 +9,8 @@ export class UserName {
     if (name.length > 50) {
       throw new Error('Name should not exceed 50 characters');
     }
+
+    this.name = name;
   }
 
   getValue() {

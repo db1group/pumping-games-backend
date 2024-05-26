@@ -9,6 +9,8 @@ export class TeamName {
     if (name.length > 100) {
       throw new Error('Name should not exceed 100 characters');
     }
+
+    this.name = name;
   }
 
   getValue() {
