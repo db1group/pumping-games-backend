@@ -11,8 +11,10 @@ import { LeagueNotInProgressError } from './errors/LeagueNotInProgressError';
 import { CannotChangeNameError } from './errors/CannotChangeNameError';
 import { CannotCancelFinishedLeagueError } from './errors/CannotCancelFinishedLeagueError';
 import { CannotFinishNotInProgressLeagueError } from './errors/CannotFinishNotInProgressLeagueError';
+import { Id } from 'src/domain/value-objects/id';
 
 export abstract class League {
+  protected id: Id;
   protected name: LeagueName;
   protected logo: Logo;
   protected season: Season;
@@ -21,6 +23,7 @@ export abstract class League {
   protected ranking: Ranking;
 
   constructor(league: LeagueInput) {
+    this.id = league.id ? new Id(league.id) : new Id();
     this.name = new LeagueName(league.name);
     this.logo = new Logo(league.logo);
     this.season = new Season(league.season);
@@ -95,6 +98,7 @@ export abstract class League {
 }
 
 export type LeagueInput = {
+  id?: string;
   name: string;
   logo: Buffer;
   season: number;
