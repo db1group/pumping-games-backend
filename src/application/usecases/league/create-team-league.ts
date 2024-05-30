@@ -3,7 +3,9 @@ import { EvidenceType } from 'src/domain/entities/league/evidence-type';
 import { TeamLeague } from 'src/domain/entities/league/team-league';
 
 export class CreateTeamLeague {
-  constructor(private readonly leagueRepository: LeagueRepository) {}
+  constructor(
+    private readonly leagueRepository: LeagueRepository<TeamLeague>,
+  ) {}
 
   execute(createTeamDTO: CreateTeamLeagueDTO) {
     const league = new TeamLeague({
