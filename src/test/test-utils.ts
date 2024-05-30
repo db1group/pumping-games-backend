@@ -6,6 +6,8 @@ import { TeamRepository } from 'src/application/repositories/team.repository';
 import { Team } from 'src/domain/entities/team/Team';
 import { Participant } from 'src/domain/entities/participant/participant';
 import Queue from 'src/infra/queue/queue';
+import { IndividualLeagueInput } from 'src/domain/entities/league/individual-league';
+import { EvidenceType } from 'src/domain/entities/league/evidence-type';
 
 export function generatePartipants(num: number): User[] {
   return Array.from({ length: num }, (_, i) => {
@@ -61,5 +63,23 @@ export function mockQueueFactoryQueue(): Queue {
     publish: jest.fn(),
     consume: jest.fn(),
     connect: jest.fn(),
+  };
+}
+
+export function fakeIndividualLeague(): IndividualLeagueInput {
+  return {
+    name: 'Test League',
+    logo: Buffer.from('Test Logo'),
+    season: 2022,
+    formEvidence: {
+      id: new Id().toString(),
+      name: 'Test Evidence',
+      evidence: {
+        type: EvidenceType.IMAGE,
+        content: 'Test Content',
+      },
+    },
+    minParticipants: 10,
+    maxParticipants: 20,
   };
 }

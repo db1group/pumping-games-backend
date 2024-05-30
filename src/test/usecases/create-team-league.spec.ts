@@ -18,6 +18,9 @@ describe('CreateTeamLeague', () => {
       save: async (league) => {
         expectedLeague = league;
       },
+      findById() {
+        throw new Error('Method not implemented.');
+      },
     };
     const createTeamLeague = new CreateTeamLeague(repoMock);
     const dto: CreateTeamLeagueDTO = {
