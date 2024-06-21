@@ -1,6 +1,6 @@
 import { TeamRepository } from '../../repositories/team.repository';
 import { UserRepository } from '../../repositories/user.repository';
-import { SendRequestTeamParticipation } from './send-request-team-participation';
+import { SendRequestTeamParticipation } from '../send-request-participation/send-request-participation';
 
 export class AddParticipantOnTeam {
   constructor(

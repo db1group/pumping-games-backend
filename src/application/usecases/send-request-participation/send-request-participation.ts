@@ -1,20 +1,5 @@
 import { Email } from 'src/domain/value-objects/email';
-import { EmailService, EmailTemplate } from '../../email/email';
-import { SendRequestTeamParticipation } from '../team/send-request-team-participation';
 
-export class SendRequestParticipationEmail
-  implements SendRequestTeamParticipation
-{
-  constructor(private readonly emailService: EmailService) {}
-  sendRequest(email: Email): Promise<void> {
-    const template: EmailTemplate = {
-      content: async () => {
-        return `
-                  <h1>Request for participation</h1>
-                  <p>You have received a request to participate in a team.</p>
-                  `;
-      },
-    };
-    return this.emailService.sendEmail(email, template);
-  }
+export interface SendRequestParticipationEmail {
+  sendRequest(email: Email): Promise<void>;
 }

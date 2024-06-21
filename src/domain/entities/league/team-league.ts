@@ -17,7 +17,7 @@ import { CannotCancelFinishedLeagueError } from './errors/CannotCancelFinishedLe
 import { CannotFinishNotInProgressLeagueError } from './errors/CannotFinishNotInProgressLeagueError';
 import { League, LeagueInput, LeagueOutput } from './league';
 
-import { Team, TeamInput } from '../team/Team';
+import { Team } from '../team/Team';
 
 export class TeamLeague extends League {
   private teams: Team[];
@@ -51,7 +51,7 @@ export class TeamLeague extends League {
     return this.status;
   }
 
-  addTeam(team: TeamInput) {
+  addTeam(team: Team) {
     if (this.status === LeagueStatus.FINISHED) {
       throw new LeagueAlreadyFinishedError();
     }
@@ -68,7 +68,7 @@ export class TeamLeague extends League {
     if (this.teams.length >= this.maxTeams.getValue()) {
       throw new MaxTeamsReachedError();
     }
-    this.teams.push(new Team(team));
+    this.teams.push(team);
   }
 
   removeTeam(teamId: string) {

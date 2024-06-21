@@ -2,32 +2,23 @@ import { User } from '../user/user';
 import { Id } from '../../value-objects/id';
 import { Logo } from '../../value-objects/logo';
 import { UserName } from '../../value-objects/user-name';
+import { Email } from 'src/domain/value-objects/email';
 
 export class Participant {
   public id: string;
-  private name: UserName;
-  private photo: Logo;
-  private owner?: boolean;
+  readonly name: UserName;
+  readonly email: Email;
+  readonly photo: Logo;
+  readonly owner?: boolean;
   private status: ParticipantStatus;
 
   constructor(participantInput: User, owner?: boolean) {
     this.id = participantInput.id ?? new Id().toString();
     this.name = participantInput.name;
+    this.email = participantInput.email;
     this.photo = new Logo(participantInput.avatar.getValue());
     this.owner = owner || false;
     this.status = ParticipantStatus.PENDING;
-  }
-
-  getName(): string {
-    return this.name.getValue();
-  }
-
-  getPhoto(): Buffer {
-    return this.photo.getValue();
-  }
-
-  isOwner(): boolean {
-    return !!this.owner;
   }
 
   getStatus(): ParticipantStatus {
