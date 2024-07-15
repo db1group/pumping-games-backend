@@ -12,7 +12,8 @@ import {
 } from 'src/application/usecases/team/create-team';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes } from '@nestjs/swagger';
-import { AuthenticatedUser } from 'nest-keycloak-connect';
+import { AuthenticatedUser, Roles } from 'nest-keycloak-connect';
+import { roles } from 'src/infra/auth/roles';
 
 @Controller('teams')
 export class TeamsController {
@@ -21,6 +22,7 @@ export class TeamsController {
   @Post('create-team')
   @UseInterceptors(FileInterceptor('logo'))
   @ApiConsumes('multipart/form-data')
+  @Roles({ roles: [roles.ADMIN] })
   @ApiBody({
     description: 'Cadastro do time',
     type: CreateTeamDto,

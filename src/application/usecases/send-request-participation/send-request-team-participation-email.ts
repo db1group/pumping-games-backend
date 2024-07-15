@@ -1,5 +1,5 @@
 import { Email } from 'src/domain/value-objects/email';
-import { EmailService, EmailTemplate } from '../../email/email';
+import { EmailService, EmailTemplate } from '../../repositories/email/email';
 import { SendRequestParticipationEmail } from './send-request-participation';
 
 export class SendRequestTeamParticipationEmail

@@ -16,7 +16,6 @@ export class Participant {
     this.id = participantInput?.id ?? new Id().toString();
     this.name = participantInput.name;
     this.email = participantInput.email;
-    this.photo = new Logo(participantInput.avatar.getValue());
     this.owner = owner || false;
     this.status = ParticipantStatus.PENDING;
   }
@@ -37,7 +36,6 @@ export class Participant {
 export type ParticipantInput = {
   id?: string;
   name: string;
-  logo: Buffer;
   players: User[];
 };
 

@@ -20,7 +20,7 @@ import { ConfigModule } from '@nestjs/config';
       authServerUrl: process.env.KEYCLOAK_SERVER_URL,
       realm: process.env.KEYCLOAK_REALM,
       clientId: process.env.KEYCLOAK_CLIENT_ID,
-      secret: process.env.KEYCLOAK_SECRET,
+      secret: process.env.KEYCLOAK_CLIENT_SECRET,
     }),
     EventsModule,
     TeamsModule,

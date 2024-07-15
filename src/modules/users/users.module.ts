@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 import { USER_REPOSITORY } from 'src/application/repositories/user.repository';
-import { UserRepositoryMemory } from 'src/infra/repositories/memory/user/user.repository.memory';
+import { KeycloakAdminService } from 'src/infra/auth/keycloak.service';
+import { UserRepositoryKeycloak } from 'src/infra/repositories/memory/user/user.repository.keycloak';
 
 const repositories = [
   {
     provide: USER_REPOSITORY,
-    useClass: UserRepositoryMemory,
+    useClass: UserRepositoryKeycloak,
   },
 ];
 @Module({
-  providers: [...repositories],
+  providers: [...repositories, KeycloakAdminService],
   exports: [...repositories],
 })
 export class UserModule {}

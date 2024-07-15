@@ -15,7 +15,6 @@ export function generatePartipants(num: number): User[] {
       id: new Id().toString(),
       name: `User ${i + 1}`,
       email: `user${i}@asdasd.com`,
-      avatar: 'avatarpath',
       roles: ['player'],
     });
   });
@@ -26,7 +25,6 @@ export function fakeUser(roles?: string[]): User {
     id: new Id().toString(),
     name: faker.person.fullName(),
     email: faker.internet.email(),
-    avatar: 'avatarpath',
     roles: roles ?? ['player'],
   });
 }
@@ -42,7 +40,6 @@ export function fakeTeam(participants?: Participant[]): Team {
 
 export function mockUserRepositoryFactory(user?: User): UserRepository {
   return {
-    createUser: jest.fn(),
     findUserById: async () => user,
     getListOfUsers: async () => [user],
   };
