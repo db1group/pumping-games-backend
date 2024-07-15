@@ -1,12 +1,12 @@
 import { TeamRepository } from '../../repositories/team.repository';
 import { UserRepository } from '../../repositories/user.repository';
-import { SendRequestTeamParticipation } from '../send-request-participation/send-request-participation';
+import { SendRequestParticipationEmail } from '../send-request-participation/send-request-participation';
 
 export class AddParticipantOnTeam {
   constructor(
     private readonly teamRepository: TeamRepository,
     private readonly userRepository: UserRepository,
-    private readonly sendRequestTeamParticipation: SendRequestTeamParticipation,
+    private readonly sendRequestTeamParticipation: SendRequestParticipationEmail,
   ) {}
 
   async execute(teamId: string, userId: string): Promise<void> {

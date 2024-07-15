@@ -17,7 +17,7 @@ export class Team {
   constructor(teamInput: TeamInput) {
     this.id = teamInput.id ?? new Id().toString();
     this.name = new TeamName(teamInput.name);
-    this.logo = new Logo(teamInput.logo);
+    this.logo = teamInput.logo ? new Logo(teamInput.logo) : null;
     this.participants = teamInput.players || [];
     this.status = TeamStatus.PENDING;
   }
@@ -26,7 +26,7 @@ export class Team {
     return this.name.getValue();
   }
 
-  getLogo(): Buffer {
+  getLogo(): string {
     return this.logo.getValue();
   }
 
@@ -68,7 +68,7 @@ export class Team {
 export type TeamInput = {
   id?: string;
   name: string;
-  logo: Buffer;
+  logo: string;
   players?: Participant[];
 };
 

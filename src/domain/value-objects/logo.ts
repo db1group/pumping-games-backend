@@ -1,5 +1,5 @@
 export class Logo {
-  constructor(private logo: Buffer) {
+  constructor(private logo: string) {
     if (!logo) {
       throw new Error('Logo is required');
     }

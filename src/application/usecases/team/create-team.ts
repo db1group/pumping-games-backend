@@ -1,11 +1,20 @@
 import { Team } from 'src/domain/entities/team/Team';
-import { UserRepository } from '../../repositories/user.repository';
+import {
+  USER_REPOSITORY,
+  UserRepository,
+} from '../../repositories/user.repository';
 import { User } from 'src/domain/entities/user/user';
-import { TeamRepository } from '../../repositories/team.repository';
+import {
+  TEAM_REPOSITORY,
+  TeamRepository,
+} from '../../repositories/team.repository';
+import { Inject } from '@nestjs/common';
 
 export class CreateTeam {
   constructor(
+    @Inject(TEAM_REPOSITORY)
     private readonly teamRepository: TeamRepository,
+    @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepository,
   ) {}
 
@@ -13,7 +22,7 @@ export class CreateTeam {
     team.addParticipant(user);
   }
 
-  async execute(createTeamDTO: CreateTeamDTO): Promise<void> {
+  async execute(createTeamDTO: CreateTeamInput): Promise<void> {
     const user = await this.userRepository.findUserById(createTeamDTO.userId);
 
     const team = new Team({
@@ -27,10 +36,9 @@ export class CreateTeam {
   }
 }
 
-export type CreateTeamDTO = {
+export type CreateTeamInput = {
   name: string;
-  description: string;
-  leagueId: string;
-  userId: string;
-  logo: Buffer;
+  description?: string;
+  userId?: string;
+  logo?: string;
 };

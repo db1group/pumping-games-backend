@@ -25,7 +25,7 @@ describe('CreateTeamLeague', () => {
     const createTeamLeague = new CreateTeamLeague(repoMock);
     const dto: CreateTeamLeagueDTO = {
       name: 'Test League',
-      logo: Buffer.from('Test Logo'),
+      logo: 'logo-path',
       season: 2022,
       formEvidence: {
         id: new Id().toString(),

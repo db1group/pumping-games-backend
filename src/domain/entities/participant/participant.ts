@@ -13,7 +13,7 @@ export class Participant {
   private status: ParticipantStatus;
 
   constructor(participantInput: User, owner?: boolean) {
-    this.id = participantInput.id ?? new Id().toString();
+    this.id = participantInput?.id ?? new Id().toString();
     this.name = participantInput.name;
     this.email = participantInput.email;
     this.photo = new Logo(participantInput.avatar.getValue());

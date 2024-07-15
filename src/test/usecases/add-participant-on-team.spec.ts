@@ -6,8 +6,8 @@ import {
   mockUserRepositoryFactory,
 } from '../test-utils';
 import { UserRepository } from 'src/application/repositories/user.repository';
-import { SendRequestTeamParticipation } from 'src/application/usecases/team/send-request-team-participation';
 import { Team } from 'src/domain/entities/team/Team';
+import { SendRequestParticipationEmail } from 'src/application/usecases/send-request-participation/send-request-participation';
 
 describe('Add Participant on Team', () => {
   it('Should add some participant on team', async () => {
@@ -24,7 +24,7 @@ describe('Add Participant on Team', () => {
     };
 
     const userRepository: UserRepository = mockUserRepositoryFactory(user);
-    const sendRequestTeamParticipation: SendRequestTeamParticipation = {
+    const sendRequestTeamParticipation: SendRequestParticipationEmail = {
       sendRequest: jest.fn(),
     };
     const addParticipantOnTeamUseCase = new AddParticipantOnTeam(
@@ -45,7 +45,7 @@ describe('Add Participant on Team', () => {
     const teamRepository = mockTeamRepositoryFactory(mockTeam);
 
     const userRepository: UserRepository = mockUserRepositoryFactory(user);
-    const sendRequestTeamParticipation: SendRequestTeamParticipation = {
+    const sendRequestTeamParticipation: SendRequestParticipationEmail = {
       sendRequest: jest.fn(),
     };
     const addParticipantOnTeamUseCase = new AddParticipantOnTeam(

@@ -9,19 +9,19 @@ describe('Ranking', () => {
           id: 1,
           name: 'Participant 1',
           points: 10,
-          logo: new Logo(Buffer.from('123')),
+          logo: new Logo('logo-path'),
         },
         {
           id: 2,
           name: 'Participant 2',
           points: 20,
-          logo: new Logo(Buffer.from('123')),
+          logo: new Logo('logo-path'),
         },
         {
           id: 3,
           name: 'Participant 3',
           points: 15,
-          logo: new Logo(Buffer.from('123')),
+          logo: new Logo('logo-path'),
         },
       ];
       const ranking = new Ranking({ id: 1, name: 'Ranking 1' }, participants);

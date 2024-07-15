@@ -1,6 +1,6 @@
 import {
   CreateTeam,
-  CreateTeamDTO,
+  CreateTeamInput,
 } from 'src/application/usecases/team/create-team';
 import { Team } from '../../domain/entities/team/Team';
 import { fakeUser, mockUserRepositoryFactory } from '../test-utils';
@@ -8,12 +8,11 @@ import { fakeUser, mockUserRepositoryFactory } from '../test-utils';
 describe('CreateTeam', () => {
   it('should create a team', async () => {
     const mockUser = fakeUser();
-    const mockCreateTeamDTO: CreateTeamDTO = {
+    const mockCreateTeamDTO: CreateTeamInput = {
       name: 'Test',
       description: 'Test',
-      leagueId: '1',
       userId: '1',
-      logo: Buffer.from('Test'),
+      logo: 'logo-path',
     };
 
     let expectedTeam: Team;

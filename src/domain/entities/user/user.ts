@@ -22,6 +22,6 @@ export type UserInput = {
   id: string;
   email: string;
   name: string;
-  avatar: Buffer;
+  avatar: string;
   roles: string[];
 };

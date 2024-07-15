@@ -2,7 +2,6 @@ import { Ranking, RankingInput } from '../ranking/ranking';
 import { LeagueMaxTeams } from '../../value-objects/league-max-teams';
 import { LeagueMinTeams } from '../../value-objects/league-min-teams';
 import { LeagueName } from '../../value-objects/league-name';
-import { Logo } from '../../value-objects/logo';
 import { Season } from '../../value-objects/season';
 import { LeagueStatus } from './league-status';
 import { NotEnoughTeamsError } from './errors/NotEnoughTeamsError';
@@ -73,10 +72,6 @@ export class TeamLeague extends League {
 
   removeTeam(teamId: string) {
     this.teams = this.teams.filter((team) => team.id !== teamId);
-  }
-
-  addLogo(logo: Buffer) {
-    this.logo = new Logo(logo);
   }
 
   removeLogo() {

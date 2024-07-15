@@ -15,7 +15,7 @@ export function generatePartipants(num: number): User[] {
       id: new Id().toString(),
       name: `User ${i + 1}`,
       email: `user${i}@asdasd.com`,
-      avatar: Buffer.from('avatar'),
+      avatar: 'avatarpath',
       roles: ['player'],
     });
   });
@@ -26,7 +26,7 @@ export function fakeUser(roles?: string[]): User {
     id: new Id().toString(),
     name: faker.person.fullName(),
     email: faker.internet.email(),
-    avatar: Buffer.from('avatar'),
+    avatar: 'avatarpath',
     roles: roles ?? ['player'],
   });
 }
@@ -35,7 +35,7 @@ export function fakeTeam(participants?: Participant[]): Team {
   return new Team({
     id: new Id().toString(),
     name: faker.person.fullName(),
-    logo: Buffer.from('avatar'),
+    logo: 'logourl',
     players: participants,
   });
 }
@@ -69,7 +69,7 @@ export function mockQueueFactoryQueue(): Queue {
 export function fakeIndividualLeague(): IndividualLeagueInput {
   return {
     name: 'Test League',
-    logo: Buffer.from('Test Logo'),
+    logo: 'Test Logo',
     season: 2022,
     formEvidence: {
       id: new Id().toString(),

@@ -48,7 +48,7 @@ export abstract class League {
     return this.status;
   }
 
-  addLogo(logo: Buffer) {
+  addLogo(logo: string) {
     this.logo = new Logo(logo);
   }
 
@@ -100,14 +100,14 @@ export abstract class League {
 export type LeagueInput = {
   id?: string;
   name: string;
-  logo: Buffer;
+  logo: string;
   season: number;
   formEvidence: LeagueFormEvidenceInput;
 };
 
 export type LeagueOutput = {
   name: string;
-  logo: Buffer;
+  logo: string;
   season: number;
   status: LeagueStatus;
 };

@@ -80,15 +80,11 @@ export class IndividualLeague extends League {
   getParticipants(): Participant[] {
     return this.participants;
   }
-
-  addLogo(logo: Buffer) {
-    super.addLogo(logo);
-  }
 }
 
 export interface IndividualLeagueInput extends LeagueInput {
   name: string;
-  logo: Buffer;
+  logo: string;
   season: number;
   minParticipants: number;
   maxParticipants: number;

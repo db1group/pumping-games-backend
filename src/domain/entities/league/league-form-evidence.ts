@@ -58,9 +58,9 @@ export class LeagueFormEvidence {
 }
 
 export type LeagueFormEvidenceInput = {
-  id: string;
+  id?: string;
   name: string;
-  evidence: {
+  evidence?: {
     type: EvidenceType;
     content: any;
   };
