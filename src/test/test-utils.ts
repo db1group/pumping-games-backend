@@ -40,6 +40,8 @@ export function fakeTeam(participants?: Participant[]): Team {
 
 export function mockUserRepositoryFactory(user?: User): UserRepository {
   return {
+    create: jest.fn(),
+    findUserByAuthProviderId: async () => user,
     findUserById: async () => user,
     getListOfUsers: async () => [user],
   };

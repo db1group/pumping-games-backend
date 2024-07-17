@@ -24,7 +24,6 @@ export class CreateTeam {
 
   async execute(createTeamDTO: CreateTeamInput): Promise<void> {
     const user = await this.userRepository.findUserById(createTeamDTO.userId);
-    console.log('user', user);
 
     const team = new Team({
       name: createTeamDTO.name,

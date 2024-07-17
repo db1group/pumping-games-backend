@@ -13,6 +13,8 @@ import {
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 
+import { DatabaseModule } from './infra/database/database.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -22,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
       clientId: process.env.KEYCLOAK_CLIENT_ID,
       secret: process.env.KEYCLOAK_CLIENT_SECRET,
     }),
+    DatabaseModule,
     EventsModule,
     TeamsModule,
     UserModule,

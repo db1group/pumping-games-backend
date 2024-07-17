@@ -3,6 +3,14 @@ import { User } from 'src/domain/entities/user/user';
 
 export class UserRepositoryMemory implements UserRepository {
   users: any = [];
+  async create(user: User): Promise<User> {
+    this.users.push(user);
+    return user;
+  }
+
+  findUserByAuthProviderId(authProviderId: string): Promise<User> {
+    return this.users.find((user) => user.authProviderId === authProviderId);
+  }
   async createUser(user: User): Promise<void> {
     this.users.push(user);
   }

@@ -3,6 +3,7 @@ import {
   Controller,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateTeamDto } from '../DTO/create-team.dto';
@@ -14,12 +15,14 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { AuthenticatedUser, Roles } from 'nest-keycloak-connect';
 import { roles } from 'src/infra/auth/roles';
+import { KeycloakAuthGuard } from 'src/infra/auth/auth.guard';
 
 @Controller('teams')
 export class TeamsController {
   constructor(private readonly createTeam: CreateTeam) {}
 
   @Post('create-team')
+  @UseGuards(KeycloakAuthGuard)
   @UseInterceptors(FileInterceptor('logo'))
   @ApiConsumes('multipart/form-data')
   @Roles({ roles: [roles.ADMIN] })

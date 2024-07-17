@@ -5,19 +5,42 @@ export class User {
   readonly id: string;
   readonly email: Email;
   readonly name: UserName;
-  readonly roles: string[];
+  private roles: string[];
+  readonly authProviderId: string;
 
   constructor(userInput: UserInput) {
-    this.id = userInput.id;
+    this.id = userInput.id ? userInput.id : '';
     this.email = new Email(userInput.email);
     this.name = new UserName(userInput.name);
-    this.roles = userInput.roles;
+    this.roles = userInput.roles || [];
+    this.authProviderId = userInput.authProviderId;
+  }
+
+  getRoles() {
+    return this.roles;
+  }
+
+  setRoles(roles: string[]) {
+    if (this.roles.length) return;
+    this.roles = roles;
+  }
+
+  static restoreFromDatabase(userInput: UserDatabaseInput) {
+    return new User(userInput);
   }
 }
 
 export type UserInput = {
+  id?: string;
+  email: string;
+  name: string;
+  roles?: string[];
+  authProviderId?: string;
+};
+
+type UserDatabaseInput = {
   id: string;
   email: string;
   name: string;
-  roles: string[];
+  authProviderId?: string;
 };
