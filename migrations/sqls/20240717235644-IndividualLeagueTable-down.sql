@@ -1,0 +1,3 @@
+drop table individual_leagues_has_participants;
+
+drop table individual_leagues;

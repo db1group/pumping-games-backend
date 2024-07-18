@@ -13,3 +13,4 @@ CREATE TABLE teams_has_participants (
     FOREIGN KEY (team_id) REFERENCES teams (id),
     FOREIGN KEY (participant_id) REFERENCES users (id)
 );
+
