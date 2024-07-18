@@ -1,8 +1,8 @@
 export class Logo {
-  constructor(private logo: string) {
-    if (!logo) {
-      throw new Error('Logo is required');
-    }
+  private readonly logo: string;
+
+  constructor(logo: string = '') {
+    this.logo = logo;
   }
 
   getValue() {

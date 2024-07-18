@@ -9,25 +9,17 @@ import { NotEnoughParticipantsOnTeamError } from './errors/NotParticipantsOnTeam
 
 export class Team {
   public id: string;
-  private name: TeamName;
-  private logo: Logo;
-  private participants: Participant[];
+  readonly name: TeamName;
+  readonly logo: Logo;
+  readonly participants: Participant[];
   private status: TeamStatus;
 
   constructor(teamInput: TeamInput) {
     this.id = teamInput.id ?? new Id().toString();
     this.name = new TeamName(teamInput.name);
-    this.logo = teamInput.logo ? new Logo(teamInput.logo) : null;
+    this.logo = new Logo(teamInput.logo);
     this.participants = teamInput.players || [];
     this.status = TeamStatus.PENDING;
-  }
-
-  getName(): string {
-    return this.name.getValue();
-  }
-
-  getLogo(): string {
-    return this.logo.getValue();
   }
 
   getConfirmedParticipants(): Participant[] {

@@ -16,6 +16,7 @@ import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { AuthenticatedUser, Roles } from 'nest-keycloak-connect';
 import { roles } from 'src/infra/auth/roles';
 import { KeycloakAuthGuard } from 'src/infra/auth/auth.guard';
+import { User } from 'src/domain/entities/user/user';
 
 @Controller('teams')
 export class TeamsController {
@@ -33,7 +34,7 @@ export class TeamsController {
   async createEvent(
     @UploadedFile() file: Express.Multer.File,
     @Body() createTeamDto: CreateTeamDto,
-    @AuthenticatedUser() user: any,
+    @AuthenticatedUser() user: User,
   ) {
     const logo = file?.path;
     const params: CreateTeamInput = { ...createTeamDto, logo, userId: user.id };

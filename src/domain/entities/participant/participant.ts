@@ -1,6 +1,5 @@
 import { User } from '../user/user';
 import { Id } from '../../value-objects/id';
-import { Logo } from '../../value-objects/logo';
 import { UserName } from '../../value-objects/user-name';
 import { Email } from 'src/domain/value-objects/email';
 
@@ -8,7 +7,6 @@ export class Participant {
   public id: string;
   readonly name: UserName;
   readonly email: Email;
-  readonly photo: Logo;
   readonly owner?: boolean;
   private status: ParticipantStatus;
 

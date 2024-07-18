@@ -15,7 +15,7 @@ export class CreateTeamDto {
     format: 'binary',
     description: 'Logo do time',
   })
-  logo: Buffer;
+  logo: any;
 
   @ApiProperty()
   players?: Participant[];
