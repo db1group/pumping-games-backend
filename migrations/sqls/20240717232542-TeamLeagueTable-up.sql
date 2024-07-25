@@ -1,21 +1,3 @@
-CREATE TABLE league_form_evidences (
-    id UUID DEFAULT gen_random_uuid () PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE evidence (
-    id UUID DEFAULT gen_random_uuid () PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    league_form_evidence_id UUID NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (league_form_evidence_id) REFERENCES league_form_evidences (id)
-);
-
 CREATE TABLE team_leagues (
     id UUID DEFAULT gen_random_uuid () PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -25,9 +7,7 @@ CREATE TABLE team_leagues (
     min_teams INT NOT NULL,
     max_teams INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    league_form_evidence_id UUID NOT NULL,
-    FOREIGN KEY (league_form_evidence_id) REFERENCES league_form_evidences (id)
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE team_leagues_has_teams (

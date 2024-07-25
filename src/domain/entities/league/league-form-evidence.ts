@@ -4,13 +4,13 @@ import { EvidenceType } from './evidence-type';
 import { Evidence, EvidenceInput } from './evidence';
 
 export class LeagueFormEvidence {
-  readonly id: Id;
+  readonly id: string;
   private name: EvidenceName;
   private description: string;
   private evidences: Evidence[];
 
   constructor(evidenceFormInput: LeagueFormEvidenceInput) {
-    this.id = new Id(evidenceFormInput.id);
+    this.id = new Id(evidenceFormInput.id).toString();
     this.name = new EvidenceName(evidenceFormInput.name);
     this.evidences = [];
   }

@@ -4,12 +4,10 @@ CREATE TABLE individual_leagues (
     logo_url VARCHAR(2048),
     season VARCHAR(255),
     status VARCHAR(255) NOT NULL,
-    league_form_evidence_id UUID NOT NULL,
     min_participants INT NOT NULL,
     max_participants INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (league_form_evidence_id) REFERENCES league_form_evidences (id)
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE individual_leagues_has_participants (

@@ -15,5 +15,5 @@ export class CreateEventDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  season?: number;
+  season?: string;
 }

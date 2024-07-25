@@ -6,27 +6,23 @@ import { CannotFinishNotInProgressEventError } from './errors/CannotFinishNotInP
 import { CannotCancelFinishedEventError } from './errors/CannotCancelFinishedEventError';
 import { Team } from '../team/Team';
 import { TeamLeague, TeamLeagueInput } from '../league/team-league';
+import { Id } from 'src/domain/value-objects/id';
 
 export class NationEvent {
+  readonly id: string;
   private name: EventName;
   private status: EventStatus;
-  readonly logo: Logo | null = null;
+  readonly logo?: Logo | null = null;
   readonly season: Season | null = null;
   readonly leagues: TeamLeague[] = [];
   readonly teams: Team[] = [];
 
   constructor(input: NationEventInput) {
+    this.id = new Id(input.id).toString();
     this.name = new EventName(input.name);
     this.status = input.status;
-    if (input.logo) {
-      this.logo = new Logo(input.logo);
-    }
-    if (input.season) {
-      this.season = new Season(input.season);
-    }
-    if (input.leagues) {
-      this.leagues = input.leagues.map((l) => new TeamLeague(l));
-    }
+    this.logo = new Logo(input.logo);
+    this.season = new Season(input.season);
   }
 
   getName() {
@@ -89,9 +85,10 @@ export class NationEvent {
 }
 
 export interface NationEventInput {
+  id?: string;
   name: string;
   status: EventStatus;
   logo?: string;
-  season?: number;
+  season?: string;
   leagues?: TeamLeagueInput[];
 }

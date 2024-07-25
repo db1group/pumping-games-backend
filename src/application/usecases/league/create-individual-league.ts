@@ -30,7 +30,7 @@ export class CreateIndividualLeague {
 export class CreateIndividualLeagueDTO {
   name: string;
   logo: string;
-  season: number;
+  season: string;
   formEvidence: {
     id: string;
     name: string;

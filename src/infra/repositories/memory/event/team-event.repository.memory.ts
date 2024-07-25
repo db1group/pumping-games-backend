@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { TeamEventRepository } from 'src/application/repositories/team-event.repository';
+import { NationEventRepository } from 'src/application/repositories/nation-event.repository';
 
 @Injectable()
-export class TeamEventRepositoryMemory implements TeamEventRepository {
+export class TeamEventRepositoryMemory implements NationEventRepository {
   events: any;
   constructor() {
     this.events = [];

@@ -26,7 +26,7 @@ describe('CreateTeamLeague', () => {
     const dto: CreateTeamLeagueDTO = {
       name: 'Test League',
       logo: 'logo-path',
-      season: 2022,
+      season: '2022',
       formEvidence: {
         id: new Id().toString(),
         name: 'Test Evidence',

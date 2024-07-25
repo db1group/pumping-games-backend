@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { EventsModule } from './modules/events/events.module';
+import { NationEventsModule } from './modules/nation-events/nation-events.module';
 import { TeamsModule } from './modules/teams/teams.module';
 import { UserModule } from './modules/users/users.module';
 import {
@@ -25,7 +25,7 @@ import { DatabaseModule } from './infra/database/database.module';
       secret: process.env.KEYCLOAK_CLIENT_SECRET,
     }),
     DatabaseModule,
-    EventsModule,
+    NationEventsModule,
     TeamsModule,
     UserModule,
   ],

@@ -45,10 +45,10 @@ export class Team {
   }
 
   private userCanAddOtherParticipants(requestedBy: User): boolean {
-    const userAlreadyAdded = this.participants.some(
+    const userIsOwner = this.participants.find(
       (participant) => participant.id === requestedBy.id,
     );
-    return !!userAlreadyAdded;
+    return userIsOwner?.owner;
   }
 
   private participantIsAlreadyOnTeam(user: User): boolean {
@@ -80,7 +80,7 @@ export class Team {
       throw new UserAlreadyOnTeam();
     }
 
-    if (this.userCanAddOtherParticipants(requestedBy)) {
+    if (!this.userCanAddOtherParticipants(requestedBy)) {
       throw new UserCannotAddOtherParticipants();
     }
 

@@ -69,7 +69,7 @@ export function fakeIndividualLeague(): IndividualLeagueInput {
   return {
     name: 'Test League',
     logo: 'Test Logo',
-    season: 2022,
+    season: '2022',
     formEvidence: {
       id: new Id().toString(),
       name: 'Test Evidence',

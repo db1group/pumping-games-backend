@@ -85,7 +85,7 @@ export class IndividualLeague extends League {
 export interface IndividualLeagueInput extends LeagueInput {
   name: string;
   logo: string;
-  season: number;
+  season: string;
   minParticipants: number;
   maxParticipants: number;
   formEvidence: LeagueFormEvidenceInput;

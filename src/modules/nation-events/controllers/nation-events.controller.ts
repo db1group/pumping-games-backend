@@ -6,16 +6,16 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateEventDto } from '../DTO/create-event.dto';
-import { CreateTeamEvent } from 'src/application/usecases/nation-event/create-nation-event';
+import { CreateNationEvent } from 'src/application/usecases/nation-event/create-nation-event';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes } from '@nestjs/swagger';
 import { Roles } from 'nest-keycloak-connect';
 import { roles } from 'src/infra/auth/roles';
 
 @Controller('events')
-export class EventsController {
-  constructor(private readonly createTeamEvent: CreateTeamEvent) {}
-  @Post('/create-team-event')
+export class NationEventsController {
+  constructor(private readonly createNationEvent: CreateNationEvent) {}
+  @Post('/create-nation-event')
   @UseInterceptors(FileInterceptor('logo'))
   @Roles({ roles: [roles.ADMIN, roles.DEFAULT_USER] })
   @ApiConsumes('multipart/form-data')
@@ -25,7 +25,7 @@ export class EventsController {
   ) {
     const logo = file?.path;
     const params = { ...createEventDto, logo };
-    return this.createTeamEvent.execute(params).then(() => {
+    return this.createNationEvent.execute(params).then(() => {
       return { message: 'Event created successfully' };
     });
   }

@@ -1,22 +1,44 @@
+import { Participant } from 'src/domain/entities/participant/participant';
 import { fakeTeam, fakeUser, mockTeamRepositoryFactory } from '../test-utils';
-import { ParticipantTeamJoin } from 'src/application/usecases/team/participant-team-join';
 
-describe('Participant answer the invitation', () => {
-  it('Should add some participant on team because it was accepted the invitation', async () => {
+describe('Participant added by Team Owner', () => {
+  it('Only Team Owner Can add a new participant on the team', async () => {
+    // Arrange
     const mockUser = fakeUser();
-    const mockTeam = fakeTeam();
+    const isOwner = true;
+    const participantOwner = new Participant(mockUser, isOwner);
+    const newParticipant = fakeUser();
 
+    const mockTeam = fakeTeam([participantOwner]);
     const teamRepository = mockTeamRepositoryFactory(mockTeam);
 
-    mockTeam.addParticipant(mockUser);
+    const team = await teamRepository.findTeamById(mockTeam.id);
 
-    const addParticipantOnTeamUseCase = new ParticipantTeamJoin(teamRepository);
-    await addParticipantOnTeamUseCase.execute(
-      mockTeam.id,
-      mockUser.id,
-      'ACCEPT',
-    );
+    console.log(team, team.getParticipants());
 
-    expect(mockTeam.getConfirmedParticipants().length).toBe(1);
+    team.addParticipant(newParticipant, mockUser);
+
+    expect(team.getParticipants().length).toBe(2);
+  });
+
+  it('Should not add user when is not team owner', async () => {
+    // Arrange
+    await expect(async () => {
+      const mockUser = fakeUser();
+      const isOwner = true;
+      const participantOwner = new Participant(mockUser, isOwner);
+      const participantDefault = fakeUser();
+      const newParticipant = fakeUser();
+
+      const mockTeam = fakeTeam([
+        participantOwner,
+        new Participant(participantDefault, false),
+      ]);
+      const teamRepository = mockTeamRepositoryFactory(mockTeam);
+
+      const team = await teamRepository.findTeamById(mockTeam.id);
+
+      return team.addParticipant(newParticipant, participantDefault);
+    }).rejects.toThrow();
   });
 });

@@ -56,7 +56,7 @@ export abstract class League {
     this.logo = null;
   }
 
-  setSeason(season: number) {
+  setSeason(season: string) {
     this.season = new Season(season);
   }
 
@@ -101,13 +101,13 @@ export type LeagueInput = {
   id?: string;
   name: string;
   logo: string;
-  season: number;
+  season: string;
   formEvidence: LeagueFormEvidenceInput;
 };
 
 export type LeagueOutput = {
   name: string;
   logo: string;
-  season: number;
+  season: string;
   status: LeagueStatus;
 };

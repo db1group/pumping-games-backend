@@ -78,7 +78,7 @@ export class TeamLeague extends League {
     this.logo = null;
   }
 
-  setSeason(season: number) {
+  setSeason(season: string) {
     this.season = new Season(season);
   }
 
