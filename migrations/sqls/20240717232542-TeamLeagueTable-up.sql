@@ -1,7 +1,7 @@
 CREATE TABLE team_leagues (
     id UUID DEFAULT gen_random_uuid () PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    logo_url VARCHAR(2048) NOT NULL,
+    logo_url VARCHAR(2048),
     season VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
     min_teams INT NOT NULL,

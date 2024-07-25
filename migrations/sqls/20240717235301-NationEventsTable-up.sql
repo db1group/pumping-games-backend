@@ -1,7 +1,7 @@
 CREATE TABLE nations (
     id UUID DEFAULT gen_random_uuid () PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    logo_url VARCHAR(2048) NOT NULL,
+    logo_url VARCHAR(2048),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -18,7 +18,7 @@ CREATE TABLE nation_events (
     id UUID DEFAULT gen_random_uuid () PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
-    logo_url VARCHAR(2048) NOT NULL,
+    logo_url VARCHAR(2048),
     season VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

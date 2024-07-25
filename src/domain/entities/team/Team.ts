@@ -21,7 +21,7 @@ export class Team {
     this.name = new TeamName(teamInput.name);
     this.logo = new Logo(teamInput.logo);
     this.participants = teamInput.players || [];
-    this.status = TeamStatus.PENDING;
+    this.status = teamInput.status ?? TeamStatus.PENDING;
   }
 
   getConfirmedParticipants(): Participant[] {
@@ -96,6 +96,7 @@ export type TeamInput = {
   id?: string;
   name: string;
   logo: string;
+  status?: TeamStatus;
   players?: Participant[];
 };
 

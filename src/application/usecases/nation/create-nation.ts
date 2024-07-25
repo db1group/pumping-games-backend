@@ -3,27 +3,31 @@ import {
   USER_REPOSITORY,
   UserRepository,
 } from '../../repositories/user.repository';
-import {
-  TEAM_REPOSITORY,
-  TeamRepository,
-} from '../../repositories/team.repository';
+
 import { Inject } from '@nestjs/common';
 import {
   BUCKET_SERVICE,
   BucketService,
 } from 'src/application/services/bucket.service';
+import {
+  NATION_REPOSITORY,
+  NationRepository,
+} from 'src/application/repositories/nation.repository';
 
-export class CreateTeam {
+export class CreateNation {
   constructor(
-    @Inject(TEAM_REPOSITORY)
-    private readonly teamRepository: TeamRepository,
+    @Inject(NATION_REPOSITORY)
+    private readonly nationRepository: NationRepository,
     @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepository,
     @Inject(BUCKET_SERVICE)
     private readonly bucketService: BucketService,
   ) {}
 
-  async execute(createTeamDTO: CreateTeamInput): Promise<void> {
+  async execute(
+    createTeamDTO: CreateNationInput,
+    nationEventId: string,
+  ): Promise<void> {
     const user = await this.userRepository.findUserById(createTeamDTO.userId);
     const logo = createTeamDTO.logo
       ? await this.bucketService.uploadFile(createTeamDTO.logo)
@@ -36,13 +40,12 @@ export class CreateTeam {
 
     team.addOwnerOfTheTeam(user);
 
-    return this.teamRepository.createTeam(team);
+    return this.nationRepository.createNation(team, nationEventId);
   }
 }
 
-export type CreateTeamInput = {
+export type CreateNationInput = {
   name: string;
-  description?: string;
   userId?: string;
   logo?: string;
 };
