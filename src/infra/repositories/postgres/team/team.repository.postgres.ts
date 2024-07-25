@@ -18,42 +18,46 @@ export class TeamRepositoryPostgres implements TeamRepository {
     const connection = await this.databaseConnection.connect();
     const transaction = await connection.transaction();
 
-    const participantsModel = team.participants.map(
+    const teamModel: TeamDatabaseModel = {
+      id: team.id,
+      name: team.name.getValue(),
+      logo_url: team.logo.getValue(),
+    };
+
+    const participantsModel: ParticipantDatabaseModel[] = team.participants.map(
       (participant: Participant) => ({
-        id: participant.id,
         name: participant.name.getValue(),
         email: participant.email.getValue(),
         owner: participant.owner,
-        status: participant.getStatus(),
+        status: participant.getStatus().toString(),
         user_id: participant.id,
       }),
     );
 
     try {
-      // Inserir na tabela teams
-      await connection('teams')
-        .transacting(transaction)
-        .insert({
-          id: team.id,
-          name: team.name.getValue(),
-          logo_url: team.logo.getValue(),
-        })
-        .returning('*');
+      const [team] = await transaction('teams')
+        .insert(teamModel)
+        .returning('id');
 
-      // Inserir na tabela participants
-      await connection('participants')
-        .transacting(transaction)
-        .insert(participantsModel);
+      const participantsIds = await transaction('participants')
+        .insert(
+          participantsModel.map((participant) => ({
+            ...participant,
+          })),
+        )
+        .returning('id');
 
-      // Confirmar a transação
-      await transaction.commit();
+      await transaction('teams_has_participants').insert(
+        participantsIds.map((participants) => ({
+          team_id: team.id,
+          participant_id: participants.id,
+        })),
+      );
+
+      transaction.commit();
     } catch (error) {
-      // Reverter a transação em caso de erro
       await transaction.rollback();
       throw error;
-    } finally {
-      // Fechar a conexão
-      connection.destroy();
     }
   }
 
@@ -67,3 +71,27 @@ export class TeamRepositoryPostgres implements TeamRepository {
     throw new Error('Method not implemented.');
   }
 }
+
+export type TeamDatabaseModel = {
+  id: string;
+  name: string;
+  logo_url: string;
+  created_at?: string;
+  updated_at?: string;
+};
+
+export type ParticipantDatabaseModel = {
+  id?: string;
+  name: string;
+  email: string;
+  owner: boolean;
+  status: string;
+  user_id: string;
+  created_at?: string;
+  updated_at?: string;
+};
+
+export type TeamHasParticipantsDatabaseModel = {
+  team_id: string;
+  participant_id: string;
+};

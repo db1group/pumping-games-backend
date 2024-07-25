@@ -7,8 +7,9 @@ import { UserModule } from '../users/users.module';
 import { TeamRepositoryPostgres } from 'src/infra/repositories/postgres/team/team.repository.postgres';
 import { AwsS3Service } from 'src/infra/bucket/aws-s3.service';
 import { BUCKET_SERVICE } from 'src/application/services/bucket.service';
+import { AddParticipantOnTeam } from 'src/application/usecases/team/add-participant-on-team';
 
-const usecases = [CreateTeam];
+const usecases = [CreateTeam, AddParticipantOnTeam];
 
 const repositories = [
   {

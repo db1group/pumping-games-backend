@@ -1,12 +1,15 @@
 import { ParticipantStatus } from 'src/domain/entities/participant/participant';
-import { TeamRepository } from '../../repositories/team.repository';
-import Queue from 'src/infra/queue/queue';
-import { ParticipantAcceptedTeamEvent } from 'src/domain/events/participant-accepted-team.event';
+import {
+  TEAM_REPOSITORY,
+  TeamRepository,
+} from '../../repositories/team.repository';
+import { Inject } from '@nestjs/common';
+import { ParticipantNotFoundError } from '../errors/participant-not-found.error';
 
 export class ParticipantTeamJoin {
   constructor(
+    @Inject(TEAM_REPOSITORY)
     private readonly teamRepository: TeamRepository,
-    private readonly queueService: Queue,
   ) {}
 
   async execute(teamId: string, userId: string, status: string): Promise<void> {
@@ -17,14 +20,11 @@ export class ParticipantTeamJoin {
       .find((participant) => participant.id === userId);
 
     if (!participant) {
-      throw new Error('Participant not found');
+      throw new ParticipantNotFoundError();
     }
 
     if (status.toUpperCase() === ParticipantStatus.ACCEPT) {
       participant?.accept();
-      const event = new ParticipantAcceptedTeamEvent(teamId);
-
-      this.queueService.publish(event.name, event);
     }
 
     if (status.toUpperCase() === ParticipantStatus.REJECTED) {

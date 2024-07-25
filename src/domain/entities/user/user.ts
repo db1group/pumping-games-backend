@@ -1,3 +1,4 @@
+import { Id } from 'src/domain/value-objects/id';
 import { Email } from '../../value-objects/email';
 import { UserName } from '../../value-objects/user-name';
 
@@ -9,7 +10,7 @@ export class User {
   readonly authProviderId: string;
 
   constructor(userInput: UserInput) {
-    this.id = userInput.id ? userInput.id : '';
+    this.id = new Id(userInput.id).toString();
     this.email = new Email(userInput.email);
     this.name = new UserName(userInput.name);
     this.roles = userInput.roles || [];

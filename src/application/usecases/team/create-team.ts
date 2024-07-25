@@ -25,7 +25,7 @@ export class CreateTeam {
   ) {}
 
   private addOwnerToTeam(team: Team, user: User): void {
-    team.addParticipant(user);
+    team.addOwnerOfTheTeam(user);
   }
 
   async execute(createTeamDTO: CreateTeamInput): Promise<void> {

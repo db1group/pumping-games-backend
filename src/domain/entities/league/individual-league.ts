@@ -51,7 +51,7 @@ export class IndividualLeague extends League {
     if (this.status === LeagueStatus.IN_PROGRESS) {
       throw new CannotAddTeamToInProgressLeagueError();
     }
-    if (this.participants.some((item) => item.id === user.id)) {
+    if (this.participants.some((item) => item.id === user.id.toString())) {
       throw new ParticipantAlreadySubscribed();
     }
     if (this.participants.length >= this.maxParticipants.getValue()) {

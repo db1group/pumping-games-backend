@@ -11,11 +11,11 @@ export class Participant {
   private status: ParticipantStatus;
 
   constructor(participantInput: User, owner?: boolean) {
-    this.id = participantInput?.id ?? new Id().toString();
+    this.id = new Id(participantInput.id.toString()).toString();
     this.name = participantInput.name;
     this.email = participantInput.email;
     this.owner = owner || false;
-    this.status = ParticipantStatus.PENDING;
+    this.status = ParticipantStatus.ACCEPT;
   }
 
   getStatus(): ParticipantStatus {

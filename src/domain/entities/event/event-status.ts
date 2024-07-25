@@ -1,7 +1,7 @@
 export enum EventStatus {
-  CANCELLED = 'cancelled',
-  ACTIVE = 'active',
-  IN_PROGRESS = 'in_progress',
-  FINISHED = 'finished',
-  PENDING = 'pending',
+  CANCELLED = 'CANCELLED',
+  ACTIVE = 'ACTIVE',
+  IN_PROGRESS = 'IN_PROGRESS',
+  FINISHED = 'FINISHED',
+  PENDING = 'PENDING',
 }

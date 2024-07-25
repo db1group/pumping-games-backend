@@ -6,7 +6,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateEventDto } from '../DTO/create-event.dto';
-import { CreateTeamEvent } from 'src/application/usecases/event/create-team-event';
+import { CreateTeamEvent } from 'src/application/usecases/nation-event/create-nation-event';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes } from '@nestjs/swagger';
 import { Roles } from 'nest-keycloak-connect';

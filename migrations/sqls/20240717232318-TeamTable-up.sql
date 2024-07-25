@@ -10,7 +10,6 @@ create table participants (
     id UUID DEFAULT gen_random_uuid () PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    photo_url VARCHAR(2048),
     owner BOOLEAN NOT NULL,
     status VARCHAR(255) NOT NULL,
     user_id UUID NOT NULL,

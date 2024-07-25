@@ -37,7 +37,11 @@ export class TeamsController {
     @AuthenticatedUser() user: User,
   ) {
     const logo = file?.path;
-    const params: CreateTeamInput = { ...createTeamDto, logo, userId: user.id };
+    const params: CreateTeamInput = {
+      ...createTeamDto,
+      logo,
+      userId: user.id.toString(),
+    };
     return this.createTeam.execute(params).then(() => {
       return { message: 'Team created successfully' };
     });

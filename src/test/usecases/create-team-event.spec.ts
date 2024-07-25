@@ -2,7 +2,7 @@ import { TeamEventRepository } from 'src/application/repositories/team-event.rep
 import {
   CreateTeamEvent,
   CreateTeamEventInput,
-} from 'src/application/usecases/event/create-team-event';
+} from 'src/application/usecases/nation-event/create-nation-event';
 import { TeamEvent } from 'src/domain/entities/event/team-event';
 
 describe('Create Team Event', () => {
@@ -44,7 +44,7 @@ describe('Create Team Event', () => {
 
     await createTeamEvent.execute(param);
     expect(expectedTeamEvent.getName()).toBe('Event Name');
-    expect(expectedTeamEvent.getStatus()).toBe('pending');
+    expect(expectedTeamEvent.getStatus()).toBe('PENDING');
     expect(expectedTeamEvent.season.getValue()).toBe(1);
   });
 });

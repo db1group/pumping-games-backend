@@ -7,7 +7,7 @@ import { CannotCancelFinishedEventError } from './errors/CannotCancelFinishedEve
 import { Team } from '../team/Team';
 import { TeamLeague, TeamLeagueInput } from '../league/team-league';
 
-export class TeamEvent {
+export class NationEvent {
   private name: EventName;
   private status: EventStatus;
   readonly logo: Logo | null = null;
@@ -15,7 +15,7 @@ export class TeamEvent {
   readonly leagues: TeamLeague[] = [];
   readonly teams: Team[] = [];
 
-  constructor(input: TeamEventInput) {
+  constructor(input: NationEventInput) {
     this.name = new EventName(input.name);
     this.status = input.status;
     if (input.logo) {
@@ -33,7 +33,7 @@ export class TeamEvent {
     return this.name.getValue();
   }
 
-  addTeam(team: Team) {
+  addNation(team: Team) {
     this.teams.push(team);
   }
 
@@ -88,7 +88,7 @@ export class TeamEvent {
   }
 }
 
-export interface TeamEventInput {
+export interface NationEventInput {
   name: string;
   status: EventStatus;
   logo?: string;

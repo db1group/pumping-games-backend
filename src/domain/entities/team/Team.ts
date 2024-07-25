@@ -6,6 +6,8 @@ import { TeamName } from '../../value-objects/team-name';
 import { CannotAddParticipantOnDeletedTeamError } from './errors/CannotAddParticipantOnDeletedTeamError';
 import { CannotConfirmDeletedTeamError } from './errors/CannotConfirmDeletedTeamError';
 import { NotEnoughParticipantsOnTeamError } from './errors/NotParticipantsOnTeamError';
+import { UserAlreadyOnTeam } from './errors/UserAlreadyOnTeam';
+import { UserCannotAddOtherParticipants } from './errors/UserCannotAddOtherParticipants';
 
 export class Team {
   public id: string;
@@ -15,7 +17,7 @@ export class Team {
   private status: TeamStatus;
 
   constructor(teamInput: TeamInput) {
-    this.id = teamInput.id ?? new Id().toString();
+    this.id = new Id(teamInput.id).toString();
     this.name = new TeamName(teamInput.name);
     this.logo = new Logo(teamInput.logo);
     this.participants = teamInput.players || [];
@@ -42,14 +44,47 @@ export class Team {
     return this.participants;
   }
 
-  addParticipant(user: User) {
-    const isOwner = this.participants.length === 0;
-    const participant = new Participant(user, isOwner);
+  private userCanAddOtherParticipants(requestedBy: User): boolean {
+    const userAlreadyAdded = this.participants.some(
+      (participant) => participant.id === requestedBy.id,
+    );
+    return !!userAlreadyAdded;
+  }
+
+  private participantIsAlreadyOnTeam(user: User): boolean {
+    return this.participants.some((participant) => participant.id === user.id);
+  }
+
+  addOwnerOfTheTeam(userToAdd: User) {
+    const isFirstParticipant = this.participants.length === 0;
+
+    if (!isFirstParticipant) {
+      throw new Error('Team already has participants');
+    }
+    const isOwner = true;
+    const participant = new Participant(userToAdd, isOwner);
+    this.participants.push(participant);
+  }
+
+  addParticipant(userToAdd: User, requestedBy: User) {
     if (this.status === TeamStatus.DELETED) {
       throw new CannotAddParticipantOnDeletedTeamError();
     }
 
-    this.participants.push(participant);
+    if (!this.participants.length) {
+      this.addOwnerOfTheTeam(userToAdd);
+      return;
+    }
+
+    if (this.participantIsAlreadyOnTeam(userToAdd)) {
+      throw new UserAlreadyOnTeam();
+    }
+
+    if (this.userCanAddOtherParticipants(requestedBy)) {
+      throw new UserCannotAddOtherParticipants();
+    }
+
+    this.participants.push(new Participant(userToAdd));
   }
 
   deleteTeam() {
@@ -65,7 +100,7 @@ export type TeamInput = {
 };
 
 export enum TeamStatus {
-  PENDING = 'pending',
-  DELETED = 'deleted',
-  ACTIVE = 'active',
+  PENDING = 'PENDING',
+  DELETED = 'DELETED',
+  ACTIVE = 'ACTIVE',
 }

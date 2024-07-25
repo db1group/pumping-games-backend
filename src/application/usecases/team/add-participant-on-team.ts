@@ -1,20 +1,31 @@
-import { TeamRepository } from '../../repositories/team.repository';
-import { UserRepository } from '../../repositories/user.repository';
-import { SendRequestParticipationEmail } from '../send-request-participation/send-request-participation';
+import { Inject } from '@nestjs/common';
+import {
+  TEAM_REPOSITORY,
+  TeamRepository,
+} from '../../repositories/team.repository';
+import {
+  USER_REPOSITORY,
+  UserRepository,
+} from '../../repositories/user.repository';
 
 export class AddParticipantOnTeam {
   constructor(
+    @Inject(TEAM_REPOSITORY)
     private readonly teamRepository: TeamRepository,
+    @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepository,
-    private readonly sendRequestTeamParticipation: SendRequestParticipationEmail,
   ) {}
 
-  async execute(teamId: string, userId: string): Promise<void> {
+  async execute(
+    teamId: string,
+    participantUserId: string,
+    requestedByUser: string,
+  ): Promise<void> {
     const team = await this.teamRepository.findTeamById(teamId);
-    const user = await this.userRepository.findUserById(userId);
-    await this.sendRequestTeamParticipation.sendRequest(user.email);
+    const user = await this.userRepository.findUserById(participantUserId);
+    const requestedBy = await this.userRepository.findUserById(requestedByUser);
 
-    team.addParticipant(user);
+    team.addParticipant(user, requestedBy);
 
     return this.teamRepository.updateTeam(team);
   }
