@@ -15,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import { DatabaseModule } from './infra/database/database.module';
 import { NationsModule } from './modules/nations/nations.module';
+import { LeagueModule } from './modules/league/league.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { NationsModule } from './modules/nations/nations.module';
       secret: process.env.KEYCLOAK_CLIENT_SECRET,
     }),
     DatabaseModule,
+    LeagueModule,
     NationsModule,
     NationEventsModule,
     TeamsModule,

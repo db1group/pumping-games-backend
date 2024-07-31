@@ -70,14 +70,6 @@ export function fakeIndividualLeague(): IndividualLeagueInput {
     name: 'Test League',
     logo: 'Test Logo',
     season: '2022',
-    formEvidence: {
-      id: new Id().toString(),
-      name: 'Test Evidence',
-      evidence: {
-        type: EvidenceType.IMAGE,
-        content: 'Test Content',
-      },
-    },
     minParticipants: 10,
     maxParticipants: 20,
   };

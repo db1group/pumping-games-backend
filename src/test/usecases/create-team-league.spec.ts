@@ -4,9 +4,7 @@ import {
   CreateTeamLeague,
   CreateTeamLeagueDTO,
 } from 'src/application/usecases/league/create-team-league';
-import { EvidenceType } from 'src/domain/entities/league/evidence-type';
 import { TeamLeague } from 'src/domain/entities/league/team-league';
-import { Id } from 'src/domain/value-objects/id';
 
 jest.mock('src/application/repositories/league.repository');
 
@@ -27,14 +25,6 @@ describe('CreateTeamLeague', () => {
       name: 'Test League',
       logo: 'logo-path',
       season: '2022',
-      formEvidence: {
-        id: new Id().toString(),
-        name: 'Test Evidence',
-        evidence: {
-          type: EvidenceType.IMAGE,
-          content: 'Test Content',
-        },
-      },
       maxTeams: 10,
       minTeams: 20,
     };
@@ -42,11 +32,14 @@ describe('CreateTeamLeague', () => {
     createTeamLeague.execute(dto);
 
     expect(expectedLeague.getLeague()).toEqual({
+      id: expect.any(String),
       name: dto.name,
       logo: dto.logo,
       season: dto.season,
       status: 'active',
       teams: [],
+      maxTeams: 10,
+      minTeams: 20,
     });
   });
 });

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpException,
   Post,
   UploadedFile,
   UseGuards,
@@ -42,8 +43,13 @@ export class TeamsController {
       logo,
       userId: user.id.toString(),
     };
-    return this.createTeam.execute(params).then(() => {
-      return { message: 'Team created successfully' };
-    });
+    return this.createTeam
+      .execute(params)
+      .then(() => {
+        return { message: 'Team created successfully' };
+      })
+      .catch((error) => {
+        return new HttpException(error.message, error.status);
+      });
   }
 }

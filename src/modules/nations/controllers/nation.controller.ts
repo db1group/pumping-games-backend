@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpException,
   Post,
   UploadedFile,
   UseGuards,
@@ -41,6 +42,9 @@ export class NationController {
       .execute(params, createNationDto.nationEventId)
       .then(() => {
         return { message: 'Nation created successfully' };
+      })
+      .catch((error) => {
+        return new HttpException(error.message, error.status);
       });
   }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpException,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -25,8 +26,13 @@ export class NationEventsController {
   ) {
     const logo = file?.path;
     const params = { ...createEventDto, logo };
-    return this.createNationEvent.execute(params).then(() => {
-      return { message: 'Event created successfully' };
-    });
+    return this.createNationEvent
+      .execute(params)
+      .then(() => {
+        return { message: 'Event created successfully' };
+      })
+      .catch((error) => {
+        return new HttpException(error.message, error.status);
+      });
   }
 }

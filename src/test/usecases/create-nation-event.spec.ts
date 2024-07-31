@@ -36,9 +36,6 @@ describe('Create Nation Event', () => {
           maxTeams: 10,
           minTeams: 2,
           season: '1',
-          formEvidence: {
-            name: 'Form Evidence Name',
-          },
         },
       ],
     };

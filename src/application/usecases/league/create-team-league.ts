@@ -1,44 +1,34 @@
-import { LeagueRepository } from 'src/application/repositories/league.repository';
-import { EvidenceType } from 'src/domain/entities/league/evidence-type';
+import { Inject } from '@nestjs/common';
+import {
+  LeagueRepository,
+  TEAM_LEAGUE_REPOSITORY,
+} from 'src/application/repositories/league.repository';
 import { TeamLeague } from 'src/domain/entities/league/team-league';
 
 export class CreateTeamLeague {
   constructor(
+    @Inject(TEAM_LEAGUE_REPOSITORY)
     private readonly leagueRepository: LeagueRepository<TeamLeague>,
   ) {}
 
-  execute(createTeamDTO: CreateTeamLeagueDTO) {
+  async execute(createTeamDTO: CreateTeamLeagueDTO) {
     const league = new TeamLeague({
       name: createTeamDTO.name,
       logo: createTeamDTO.logo,
       season: createTeamDTO.season,
-      formEvidence: {
-        id: createTeamDTO.formEvidence.id,
-        name: createTeamDTO.formEvidence.name,
-        evidence: {
-          type: createTeamDTO.formEvidence.evidence.type,
-          content: createTeamDTO.formEvidence.evidence.content,
-        },
-      },
       minTeams: createTeamDTO.minTeams,
       maxTeams: createTeamDTO.maxTeams,
     });
-    this.leagueRepository.save(league);
+    return this.leagueRepository.save(league, createTeamDTO.nationEventId);
   }
 }
 
 export class CreateTeamLeagueDTO {
+  id?: string;
   name: string;
-  logo: string;
+  logo?: string;
   season: string;
-  formEvidence: {
-    id: string;
-    name: string;
-    evidence: {
-      type: EvidenceType;
-      content: any;
-    };
-  };
   minTeams: number;
   maxTeams: number;
+  nationEventId?: string;
 }

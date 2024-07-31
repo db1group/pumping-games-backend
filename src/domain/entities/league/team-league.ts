@@ -1,11 +1,9 @@
-import { Ranking, RankingInput } from '../ranking/ranking';
 import { LeagueMaxTeams } from '../../value-objects/league-max-teams';
 import { LeagueMinTeams } from '../../value-objects/league-min-teams';
 import { LeagueName } from '../../value-objects/league-name';
 import { Season } from '../../value-objects/season';
 import { LeagueStatus } from './league-status';
 import { NotEnoughTeamsError } from './errors/NotEnoughTeamsError';
-import { LeagueNotInProgressError } from './errors/LeagueNotInProgressError';
 import { LeagueAlreadyFinishedError } from './errors/LeagueAlreadyFinishedError';
 import { LeagueAlreadyCancelledError } from './errors/LeagueAlreadyCancelledError';
 import { CannotAddTeamToInProgressLeagueError } from './errors/CannotAddTeamToInProgressLeagueError';
@@ -26,8 +24,10 @@ export class TeamLeague extends League {
   constructor(league: TeamLeagueInput) {
     super(league);
     this.teams = [];
-    this.maxTeams = new LeagueMaxTeams(league.maxTeams);
+    console.log(league.minTeams);
+    console.log(league.maxTeams);
     this.minTeams = new LeagueMinTeams(league.minTeams);
+    this.maxTeams = new LeagueMaxTeams(league.maxTeams, this.minTeams);
   }
 
   startLeague() {
@@ -35,15 +35,6 @@ export class TeamLeague extends League {
       throw new NotEnoughTeamsError();
     }
     this.status = LeagueStatus.IN_PROGRESS;
-  }
-
-  addRanking(ranking: RankingInput) {
-    if (this.status === LeagueStatus.IN_PROGRESS) {
-      this.ranking = new Ranking(ranking);
-      return;
-    }
-
-    throw new LeagueNotInProgressError();
   }
 
   getStatus() {
@@ -98,10 +89,6 @@ export class TeamLeague extends League {
     this.name = new LeagueName(name);
   }
 
-  changeFormEvidenceName(name: string) {
-    this.leagueFormEvidence.changeName(name);
-  }
-
   cancelLeague() {
     if (this.status === LeagueStatus.FINISHED) {
       throw new CannotCancelFinishedLeagueError();
@@ -120,11 +107,14 @@ export class TeamLeague extends League {
 
   getLeague(): TeamLeagueOutput {
     return {
+      id: this.id,
       name: this.name.getValue(),
       logo: this.logo?.getValue(),
       season: this.season.getValue(),
       teams: this.teams,
       status: this.status,
+      minTeams: this.minTeams.getValue(),
+      maxTeams: this.maxTeams.getValue(),
     };
   }
 }
@@ -136,4 +126,6 @@ export interface TeamLeagueInput extends LeagueInput {
 
 export interface TeamLeagueOutput extends LeagueOutput {
   teams: Team[];
+  minTeams: number;
+  maxTeams: number;
 }

@@ -1,4 +1,3 @@
-import { LeagueFormEvidenceInput } from './league-form-evidence';
 import { League, LeagueInput, LeagueOutput } from './league';
 import { NotEnoughTeamsError } from './errors/NotEnoughTeamsError';
 import { User } from '../user/user';
@@ -20,17 +19,23 @@ export class IndividualLeague extends League {
   constructor(league: IndividualLeagueInput) {
     super(league);
     this.minParticipants = new LeagueMinTeams(league.minParticipants);
-    this.maxParticipants = new LeagueMaxTeams(league.maxParticipants);
+    this.maxParticipants = new LeagueMaxTeams(
+      league.maxParticipants,
+      this.minParticipants,
+    );
     this.participants = [];
   }
 
   getLeague(): IndividualLeagueOutput {
     return {
+      id: this.id,
       name: this.name.getValue(),
       logo: this.logo.getValue(),
       season: this.season.getValue(),
       status: this.status,
       participants: this.participants,
+      minParticipants: this.minParticipants.getValue(),
+      maxParticipants: this.maxParticipants.getValue(),
     };
   }
 
@@ -88,9 +93,10 @@ export interface IndividualLeagueInput extends LeagueInput {
   season: string;
   minParticipants: number;
   maxParticipants: number;
-  formEvidence: LeagueFormEvidenceInput;
 }
 
 export interface IndividualLeagueOutput extends LeagueOutput {
   participants: Participant[];
+  minParticipants: number;
+  maxParticipants: number;
 }
