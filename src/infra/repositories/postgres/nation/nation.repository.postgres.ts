@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { NationRepository } from 'src/application/repositories/nation.repository';
 import { Participant } from 'src/domain/entities/participant/participant';
 import { Team } from 'src/domain/entities/team/Team';
@@ -23,6 +23,7 @@ export class NationRepositoryPostgres implements NationRepository {
       id: nation.id,
       name: nation.name.getValue(),
       logo_url: nation.logo.getValue(),
+      status: nation.getStatus().toString(),
     };
 
     const participantsModel: ParticipantDatabaseModel[] =
@@ -30,7 +31,6 @@ export class NationRepositoryPostgres implements NationRepository {
         name: participant.name.getValue(),
         email: participant.email.getValue(),
         owner: participant.owner,
-        status: participant.getStatus().toString(),
         user_id: participant.id,
       }));
 
@@ -62,14 +62,20 @@ export class NationRepositoryPostgres implements NationRepository {
       transaction.commit();
     } catch (error) {
       await transaction.rollback();
-      throw error;
+      throw new HttpException('Erro ao cadastrar a nação', error.status);
     }
+  }
+
+  findNationById(nationId: string): Promise<Team> {
+    console.log('nationId', nationId);
+    throw new Error('Method not implemented.');
   }
 }
 
 export type NationDatabaseModel = {
   id: string;
   name: string;
+  status: string;
   logo_url: string;
   created_at?: string;
   updated_at?: string;

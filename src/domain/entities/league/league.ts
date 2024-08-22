@@ -8,7 +8,7 @@ import { CannotFinishNotInProgressLeagueError } from './errors/CannotFinishNotIn
 import { Id } from 'src/domain/value-objects/id';
 
 export abstract class League {
-  protected id: string;
+  public readonly id: string;
   protected name: LeagueName;
   protected logo: Logo;
   protected season: Season;
@@ -25,6 +25,18 @@ export abstract class League {
   abstract getLeague();
 
   abstract startLeague();
+
+  getName() {
+    return this.name.getValue();
+  }
+
+  getLogo() {
+    return this.logo.getValue();
+  }
+
+  getSeason() {
+    return this.season.getValue();
+  }
 
   getStatus() {
     return this.status;

@@ -17,6 +17,15 @@ export class User {
     this.authProviderId = userInput.authProviderId;
   }
 
+  static restoreFromDatabase(userInput: UserDatabaseInput) {
+    return new User({
+      id: userInput.id,
+      email: userInput.email,
+      name: userInput.name,
+      authProviderId: userInput.authProviderId,
+    });
+  }
+
   getRoles() {
     return this.roles;
   }
@@ -25,23 +34,19 @@ export class User {
     if (this.roles.length) return;
     this.roles = roles;
   }
-
-  static restoreFromDatabase(userInput: UserDatabaseInput) {
-    return new User(userInput);
-  }
 }
+
+export type UserDatabaseInput = {
+  id: string;
+  email: string;
+  name: string;
+  authProviderId?: string;
+};
 
 export type UserInput = {
   id?: string;
   email: string;
   name: string;
   roles?: string[];
-  authProviderId?: string;
-};
-
-type UserDatabaseInput = {
-  id: string;
-  email: string;
-  name: string;
   authProviderId?: string;
 };

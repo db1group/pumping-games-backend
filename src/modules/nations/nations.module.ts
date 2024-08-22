@@ -7,8 +7,10 @@ import { NationRepositoryPostgres } from 'src/infra/repositories/postgres/nation
 import { BUCKET_SERVICE } from 'src/application/services/bucket.service';
 import { AwsS3Service } from 'src/infra/bucket/aws-s3.service';
 import { UserModule } from '../users/users.module';
+import { AddParticipantOnNation } from 'src/application/usecases/nation/add-participant-on-nation';
+import { NationEventsModule } from '../nation-events/nation-events.module';
 
-const usecases = [CreateNation];
+const usecases = [CreateNation, AddParticipantOnNation];
 
 const repositories = [
   {
@@ -23,7 +25,7 @@ const services = [
   },
 ];
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, NationEventsModule],
   controllers: [NationController],
   providers: [...usecases, ...repositories, ...services],
 })

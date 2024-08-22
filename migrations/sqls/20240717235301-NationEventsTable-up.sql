@@ -3,7 +3,8 @@ CREATE TABLE nations (
     name VARCHAR(255) NOT NULL,
     logo_url VARCHAR(2048),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(255) NOT NULL
 );
 
 create table nations_has_participants (

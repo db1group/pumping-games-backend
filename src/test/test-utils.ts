@@ -7,7 +7,7 @@ import { Team } from 'src/domain/entities/team/Team';
 import { Participant } from 'src/domain/entities/participant/participant';
 import Queue from 'src/infra/queue/queue';
 import { IndividualLeagueInput } from 'src/domain/entities/league/individual-league';
-import { EvidenceType } from 'src/domain/entities/league/evidence-type';
+import { NationRepository } from 'src/application/repositories/nation.repository';
 
 export function generatePartipants(num: number): User[] {
   return Array.from({ length: num }, (_, i) => {
@@ -53,6 +53,15 @@ export function mockTeamRepositoryFactory(team?: Team): TeamRepository {
     updateTeam: jest.fn(),
     findTeamById: async () => {
       return team ?? fakeTeam();
+    },
+  };
+}
+
+export function mockNationRepositoryFactory(nation?: Team): NationRepository {
+  return {
+    createNation: jest.fn(),
+    findNationById: async () => {
+      return nation ?? fakeTeam();
     },
   };
 }

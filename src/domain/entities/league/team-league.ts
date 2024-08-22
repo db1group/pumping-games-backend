@@ -1,7 +1,6 @@
 import { LeagueMaxTeams } from '../../value-objects/league-max-teams';
 import { LeagueMinTeams } from '../../value-objects/league-min-teams';
 import { LeagueName } from '../../value-objects/league-name';
-import { Season } from '../../value-objects/season';
 import { LeagueStatus } from './league-status';
 import { NotEnoughTeamsError } from './errors/NotEnoughTeamsError';
 import { LeagueAlreadyFinishedError } from './errors/LeagueAlreadyFinishedError';
@@ -24,10 +23,25 @@ export class TeamLeague extends League {
   constructor(league: TeamLeagueInput) {
     super(league);
     this.teams = [];
-    console.log(league.minTeams);
-    console.log(league.maxTeams);
+
     this.minTeams = new LeagueMinTeams(league.minTeams);
     this.maxTeams = new LeagueMaxTeams(league.maxTeams, this.minTeams);
+  }
+
+  static restoreFromDatabase(league: TeamLeagueInput) {
+    return new TeamLeague(league);
+  }
+
+  getTeams() {
+    return this.teams;
+  }
+
+  getMinTeams() {
+    return this.minTeams.getValue();
+  }
+
+  getMaxTeams() {
+    return this.maxTeams.getValue();
   }
 
   startLeague() {
@@ -63,14 +77,6 @@ export class TeamLeague extends League {
 
   removeTeam(teamId: string) {
     this.teams = this.teams.filter((team) => team.id !== teamId);
-  }
-
-  removeLogo() {
-    this.logo = null;
-  }
-
-  setSeason(season: string) {
-    this.season = new Season(season);
   }
 
   changeName(name: string) {

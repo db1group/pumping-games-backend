@@ -29,6 +29,13 @@ describe('Create Nation', () => {
         expectedNation = team;
         expectedNationEventId = id;
       },
+      findNationById: async () => {
+        return new Team({
+          id: '1',
+          name: 'Test',
+          logo: 'logo-path',
+        });
+      },
     };
 
     const createNation = new CreateNation(

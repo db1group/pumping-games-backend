@@ -22,7 +22,7 @@ export class KnexAdapterService implements DatabaseConnection {
 
     this.knex = knexBuilder({
       client: 'pg',
-      debug: true,
+      debug: false,
       acquireConnectionTimeout: 4000,
       connection: {
         host: process.env.DATABASE_HOST,

@@ -12,7 +12,7 @@ services:
     ports:
       - 5432:5432
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:25.0.0
     environment:
       DB_VENDOR: h2
       KEYCLOAK_ADMIN: admin
@@ -23,3 +23,4 @@ services:
       - '8080:8080'
     volumes:
       - ./keycloak-data:/opt/jboss/keycloak/standalone/data
+      - ./realm-export.json:/opt/keycloak/data/import

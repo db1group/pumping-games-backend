@@ -8,33 +8,34 @@ export class Participant {
   readonly name: UserName;
   readonly email: Email;
   readonly owner?: boolean;
-  private status: ParticipantStatus;
 
   constructor(participantInput: User, owner?: boolean) {
-    this.id = new Id(participantInput.id.toString()).toString();
+    this.id = new Id(participantInput.id).toString();
     this.name = participantInput.name;
     this.email = participantInput.email;
     this.owner = owner || false;
-    this.status = ParticipantStatus.ACCEPT;
   }
 
-  getStatus(): ParticipantStatus {
-    return this.status;
-  }
-
-  accept(): void {
-    this.status = ParticipantStatus.ACCEPT;
-  }
-
-  reject(): void {
-    this.status = ParticipantStatus.REJECTED;
+  static restoreFromDatabase(participantInput: ParticipantDatabaseInput) {
+    const user = new User({
+      id: participantInput.user.id,
+      email: participantInput.user.email.getValue(),
+      name: participantInput.user.name.getValue(),
+    });
+    return new Participant(user, participantInput.owner);
   }
 }
 
 export type ParticipantInput = {
   id?: string;
   name: string;
-  players: User[];
+  email: string;
+};
+
+export type ParticipantDatabaseInput = {
+  id: string;
+  user: User;
+  owner: boolean;
 };
 
 export enum ParticipantStatus {

@@ -4,6 +4,7 @@ import {
   HttpException,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateEventDto } from '../DTO/create-event.dto';
@@ -12,11 +13,13 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes } from '@nestjs/swagger';
 import { Roles } from 'nest-keycloak-connect';
 import { roles } from 'src/infra/auth/roles';
+import { KeycloakAuthGuard } from 'src/infra/auth/auth.guard';
 
 @Controller('events')
 export class NationEventsController {
   constructor(private readonly createNationEvent: CreateNationEvent) {}
   @Post('/create-nation-event')
+  @UseGuards(KeycloakAuthGuard)
   @UseInterceptors(FileInterceptor('logo'))
   @Roles({ roles: [roles.ADMIN, roles.DEFAULT_USER] })
   @ApiConsumes('multipart/form-data')

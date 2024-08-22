@@ -2,9 +2,9 @@ import { Knex } from 'knex';
 
 export const DATABASE_CONNECTION = 'DATABASE_CONNECTION';
 export interface DatabaseConnection {
-  connect(): Promise<Database>;
+  connect(): Promise<Connection>;
   close(): Promise<void>;
 }
 
-export type Database = Knex;
+export type Connection = Knex;
 export type Transaction = Knex.Transaction;

@@ -29,7 +29,6 @@ export class TeamRepositoryPostgres implements TeamRepository {
         name: participant.name.getValue(),
         email: participant.email.getValue(),
         owner: participant.owner,
-        status: participant.getStatus().toString(),
         user_id: participant.id,
       }),
     );
@@ -85,7 +84,6 @@ export type ParticipantDatabaseModel = {
   name: string;
   email: string;
   owner: boolean;
-  status: string;
   user_id: string;
   created_at?: string;
   updated_at?: string;

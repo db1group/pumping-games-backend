@@ -1,11 +1,16 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { NationEventRepository } from 'src/application/repositories/nation-event.repository';
 import { NationEvent } from 'src/domain/entities/event/nation-event';
+
 import {
   DATABASE_CONNECTION,
   DatabaseConnection,
 } from 'src/infra/database/database-connection';
 
+import { NationEventRestoreBuilder } from './nation-event-restore.builder';
+import { NationEventUpdateBuilder } from './nation-event-update.builder';
+
+@Injectable()
 export class NationEventRepositoryPostgres implements NationEventRepository {
   constructor(
     @Inject(DATABASE_CONNECTION)
@@ -25,21 +30,28 @@ export class NationEventRepositoryPostgres implements NationEventRepository {
     };
 
     try {
-      await connection('nation_events')
-        .transacting(transaction)
-        .insert(eventModel);
+      await connection('nation_events').insert(eventModel);
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
     }
   }
   async updateEvent(event: NationEvent): Promise<void> {
-    console.log(event);
+    const connection = await this.databaseConnection.connect();
+    const transaction = await connection.transaction();
+
+    const updateBuilder = new NationEventUpdateBuilder(connection, transaction);
+    return updateBuilder.build(event);
   }
+
   async findEventById(id: string): Promise<NationEvent> {
-    console.log(id);
-    return null;
+    const connection = await this.databaseConnection.connect();
+    const nationEvent = await new NationEventRestoreBuilder(connection).build(
+      id,
+    );
+    return nationEvent;
   }
+
   async removeEvent(event: NationEvent): Promise<void> {
     console.log(event);
   }

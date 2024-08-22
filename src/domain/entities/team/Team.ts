@@ -1,11 +1,10 @@
-import { Participant, ParticipantStatus } from '../participant/participant';
+import { Participant } from '../participant/participant';
 import { User } from '../user/user';
 import { Id } from '../../value-objects/id';
 import { Logo } from '../../value-objects/logo';
 import { TeamName } from '../../value-objects/team-name';
 import { CannotAddParticipantOnDeletedTeamError } from './errors/CannotAddParticipantOnDeletedTeamError';
 import { CannotConfirmDeletedTeamError } from './errors/CannotConfirmDeletedTeamError';
-import { NotEnoughParticipantsOnTeamError } from './errors/NotParticipantsOnTeamError';
 import { UserAlreadyOnTeam } from './errors/UserAlreadyOnTeam';
 import { UserCannotAddOtherParticipants } from './errors/UserCannotAddOtherParticipants';
 
@@ -24,19 +23,17 @@ export class Team {
     this.status = teamInput.status ?? TeamStatus.PENDING;
   }
 
-  getConfirmedParticipants(): Participant[] {
-    return this.participants.filter(
-      (participant) => participant.getStatus() === ParticipantStatus.ACCEPT,
-    );
+  static restoreFromDatabase(teamInput: TeamInput, status: string) {
+    const team = new Team(teamInput);
+    team.status = status as TeamStatus;
+    return team;
   }
 
   confirmTeam() {
     if (this.status === TeamStatus.DELETED) {
       throw new CannotConfirmDeletedTeamError();
     }
-    if (this.getConfirmedParticipants().length < 2) {
-      throw new NotEnoughParticipantsOnTeamError();
-    }
+
     this.status = TeamStatus.ACTIVE;
   }
 
@@ -87,6 +84,10 @@ export class Team {
     this.participants.push(new Participant(userToAdd));
   }
 
+  getStatus(): TeamStatus {
+    return this.status;
+  }
+
   deleteTeam() {
     this.status = TeamStatus.DELETED;
   }
@@ -95,7 +96,7 @@ export class Team {
 export type TeamInput = {
   id?: string;
   name: string;
-  logo: string;
+  logo?: string;
   status?: TeamStatus;
   players?: Participant[];
 };

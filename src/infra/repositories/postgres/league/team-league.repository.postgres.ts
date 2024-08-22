@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { HttpException, Inject } from '@nestjs/common';
 import { LeagueRepository } from 'src/application/repositories/league.repository';
 import { TeamLeague } from 'src/domain/entities/league/team-league';
 import {
@@ -44,7 +44,7 @@ export class TeamLeagueRepositoryPostgres
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
-      throw error;
+      throw new HttpException('Erro ao cadastrar a liga.', error.status);
     }
   }
 
