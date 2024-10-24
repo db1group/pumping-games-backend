@@ -18,9 +18,9 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KEYCLOAK_LOGLEVEL: DEBUG
-    command: ['start-dev', '--import-realm']
+    command: ['start-dev', '--import-realm', '--verbose']
     ports:
       - '8080:8080'
     volumes:
-      - ./keycloak-data:/opt/jboss/keycloak/standalone/data
-      - ./realm-export.json:/opt/keycloak/data/import
+      - ./keycloak/new-realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./keycloak/pumping-games-theme:/opt/keycloak/themes/pumping-games-theme

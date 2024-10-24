@@ -68,7 +68,6 @@ export class NationEvent {
   }
 
   addParticipant(nationId: string, participantToAdd: User, requestedBy: User) {
-    console.log(participantToAdd, 'aqui');
     const team = this.nations.find((t) => t.id === nationId);
     const participantIsAlreadyInOtherTeam = this.nations.some((t) =>
       t.getParticipants().some((p) => p.id === participantToAdd.id),
